@@ -1,0 +1,33 @@
+App\Entity\Measurement:
+    properties:
+        localization:
+            - NotNull:
+                  groups: [create]
+        measuredAt:
+            - NotNull:
+                  groups: [create, edit]
+            - GreaterThanOrEqual:
+                  value: today
+                  message: 'Data musi odnosić się do dzisiejszego dnia lub przyszłości.'
+                  groups: [create]
+        tempCelsius:
+            - Range:
+                  min: -100
+                  max: 80
+                  groups: [create, edit]
+        humidityPercent:
+            - Range:
+                  min: 0
+                  max: 100
+                  groups: [create, edit]
+        pressureHpa:
+            - Range:
+                  min: 870
+                  max: 1085
+                  groups: [create]
+        windSpeedKmh:
+            - PositiveOrZero:
+                  groups: [create, edit]
+        precipitationMm:
+            - PositiveOrZero:
+                  groups: [create, edit]
