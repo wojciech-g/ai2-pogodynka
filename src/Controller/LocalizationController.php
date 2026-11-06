@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/localization')]
 final class LocalizationController extends AbstractController
 {
     #[Route(name: 'app_localization_index', methods: ['GET'])]
+    #[IsGranted("ROLE_LOCALIZATION_INDEX")]
     public function index(LocalizationRepository $localizationRepository): Response
     {
         return $this->render('localization/index.html.twig', [
@@ -23,6 +25,7 @@ final class LocalizationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_localization_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_LOCALIZATION_NEW")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $localization = new Localization();
@@ -45,6 +48,7 @@ final class LocalizationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_localization_show', methods: ['GET'])]
+    #[IsGranted("ROLE_LOCALIZATION_SHOW")]
     public function show(Localization $localization): Response
     {
         return $this->render('localization/show.html.twig', [
@@ -53,6 +57,7 @@ final class LocalizationController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_localization_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_LOCALIZATION_EDIT")]
     public function edit(Request $request, Localization $localization, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(LocalizationType::class, $localization, [
@@ -73,6 +78,7 @@ final class LocalizationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_localization_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_LOCALIZATION_DELETE")]
     public function delete(Request $request, Localization $localization, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$localization->getId(), $request->getPayload()->getString('_token'))) {
