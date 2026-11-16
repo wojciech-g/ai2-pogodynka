@@ -1,0 +1,10 @@
+{% autoescape false %}
+city,country,date,celsius,fahrenheit
+{% for m in measurements %}
+{{- city }},
+{{- country }},
+{{- m.measuredAt|date('Y-m-d') }},
+{{- m.tempCelsius }},
+{{- m.fahrenheit  }}
+{% endfor %}
+{% endautoescape %}
